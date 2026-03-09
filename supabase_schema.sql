@@ -92,7 +92,7 @@ CREATE POLICY "Anyone can read approved businesses" ON businesses FOR SELECT USI
 CREATE POLICY "Owners can read own business" ON businesses FOR SELECT USING (auth.uid() = owner_id);
 CREATE POLICY "Owners can update own business" ON businesses FOR UPDATE USING (auth.uid() = owner_id);
 CREATE POLICY "Owners can insert business" ON businesses FOR INSERT WITH CHECK (auth.uid() = owner_id);
-CREATE POLICY "Admins can manage all businesses" ON businesses ALL USING (EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'));
+CREATE POLICY "Admins can manage all businesses" ON businesses FOR ALL USING (EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin'));
 
 -- Reviews: Tourists can insert, everyone can read, owners can delete their own
 CREATE POLICY "Anyone can read reviews" ON reviews FOR SELECT USING (true);
@@ -101,7 +101,7 @@ CREATE POLICY "Users can delete own reviews" ON reviews FOR DELETE USING (auth.u
 
 -- Favorites: Tourists can manage their own
 CREATE POLICY "Users can read own favorites" ON favorites FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Tourists can manage favorites" ON favorites ALL USING (EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'tourist') AND auth.uid() = user_id);
+CREATE POLICY "Tourists can manage favorites" ON favorites FOR ALL USING (EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'tourist') AND auth.uid() = user_id);
 
 -- Website Reviews: Anyone can insert, admins can read
 CREATE POLICY "Anyone can insert website reviews" ON website_reviews FOR INSERT WITH CHECK (true);
