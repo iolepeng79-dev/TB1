@@ -1,0 +1,5 @@
+{
+  "name": "Botswana Tourism Hub",
+  "description": "A comprehensive platform for exploring Botswana's tourism services, featuring lodges, safari camps, and more.",
+  "requestFramePermissions": ["geolocation"]
+}
